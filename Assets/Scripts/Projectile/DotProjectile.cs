@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class DotProjectile : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public float initialVelocity;
     public KeyCode FireKey;
     public KeyCode DestroyKey;
 
@@ -71,6 +70,6 @@ public class DotProjectile : MonoBehaviour
 
     private void OnDestroy()
     {
-        blobAssetStore.Dispose();
+        //blobAssetStore.Dispose();
     }
 }

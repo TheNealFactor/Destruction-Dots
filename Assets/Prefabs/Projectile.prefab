@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6994283861691520074}
   - component: {fileID: 7021133171404519781}
   - component: {fileID: 169084449553027538}
+  - component: {fileID: 5869530032004359472}
   m_Layer: 7
   m_Name: Projectile
   m_TagString: Projectile
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4196594046733982676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 16e4cae1dbe0f3a4c99ad24338d7ec2f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -291,3 +292,17 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &5869530032004359472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4196594046733982676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158a6d01456681547a183b655027d35b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ForceAmount: 10
+  ForwardInputKey: 0

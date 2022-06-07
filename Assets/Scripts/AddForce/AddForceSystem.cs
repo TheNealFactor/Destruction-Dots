@@ -14,15 +14,16 @@ namespace TMG.PhysicsAddForces
         protected override void OnUpdate()
         {
             var deltaTime = Time.DeltaTime;
-            Entities.ForEach((Entity sphere, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass,
+            Entities.ForEach((Entity projectile, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass, ref Translation translation, ref Rotation rotation,
                 in MoveForceData moveForceData) =>
             {
-                if (Input.GetKey(moveForceData.ForwardInputKey))
-                {
-                    var forceVector = (float3)Vector3.forward * moveForceData.ForceAmount * deltaTime;
-                    physicsVelocity.ApplyLinearImpulse(physicsMass, forceVector);
 
-                }
+                    var forceVector = (float3)Vector3.forward * moveForceData.ForceAmount * deltaTime;
+            physicsVelocity.ApplyLinearImpulse(physicsMass, forceVector);
+            //var direction = rotation;
+
+               // physicsVelocity.ApplyImpulse(physicsMass, translation, rotation, forceVector, 0.0f);
+
             }).Run();
         }
     }
