@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 4196594046733982681}
   - component: {fileID: 4196594046733982680}
   - component: {fileID: 4196594046733982679}
-  - component: {fileID: 6994283861691520074}
   - component: {fileID: 7021133171404519781}
   - component: {fileID: 169084449553027538}
-  - component: {fileID: 5869530032004359472}
+  - component: {fileID: 1805131042110335785}
   m_Layer: 7
   m_Name: Projectile
   m_TagString: Projectile
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6994283861691520074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4196594046733982676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConversionMode: 0
 --- !u!114 &7021133171404519781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +278,7 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &5869530032004359472
+--- !u!114 &1805131042110335785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,5 +290,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158a6d01456681547a183b655027d35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceAmount: 10
+  ForceAmount: 100
   ForwardInputKey: 0

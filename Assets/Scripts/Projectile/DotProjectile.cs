@@ -11,6 +11,7 @@ public class DotProjectile : MonoBehaviour
     public GameObject projectilePrefab;
     public KeyCode FireKey;
     public KeyCode DestroyKey;
+    public Transform GunBarrel;
 
     private Entity projectileEntity;
     private EntityManager entityManager;
@@ -35,6 +36,7 @@ public class DotProjectile : MonoBehaviour
     {
         if (Input.GetKeyDown(FireKey))
         {
+            Vector3 rotation = GunBarrel.rotation.eulerAngles;
             //Remove other projectiles from the scene
 
             Entity projectile = entityManager.Instantiate(projectileEntity);
@@ -44,6 +46,7 @@ public class DotProjectile : MonoBehaviour
                 Value = new Unity.Mathematics.float3(this.transform.position)
             };
             entityManager.SetComponentData(projectile, projectileTranslation);
+            entityManager.SetComponentData(projectile, new Rotation { Value = Quaternion.Euler(rotation) });
 
             projectiles.Add(projectile);
 
