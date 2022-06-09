@@ -33,14 +33,8 @@ public class DotProjectile : MonoBehaviour
     {
         if (Input.GetKeyDown(FireKey))
         {
-            // Remove other projectiles from the scene
-            //foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Projectile"))
-            //{
-            //    GameObject.Destroy(obj);
-            //}
             Vector3 rotation = GunBarrel.rotation.eulerAngles;
             rotation.x = 0f;
-
 
             Entity bullet = entityManager.Instantiate(projectileEntityPrefab);
             entityManager.SetComponentData(bullet, new Translation { Value = GunBarrel.position });

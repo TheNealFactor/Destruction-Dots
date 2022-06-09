@@ -26,8 +26,8 @@ namespace TMG.PhysicsAddForces
 
                 //if (Input.GetKey(moveForceData.ForwardInputKey))
                 //{
-
-                  var direction = math.forward(rotation.Value);
+                float3 direction = math.mul(rotation.Value, new float3(0f, 0f, 1f));
+               // var direction = math.forward(rotation.Value);
                     //quaternion
                     var forceVector = direction * moveForceData.ForceAmount * deltaTime;
                     // rotation.Value = quaternion.LookRotation(translation.Value - tar);
