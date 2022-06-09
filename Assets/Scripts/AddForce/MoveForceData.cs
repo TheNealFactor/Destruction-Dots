@@ -9,5 +9,6 @@ namespace TMG.PhysicsAddForces
     {
         public float ForceAmount;
         public KeyCode ForwardInputKey;
+        public Vector3 ForwardDirection;
     }
 }

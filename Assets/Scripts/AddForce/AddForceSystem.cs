@@ -7,24 +7,39 @@ using Unity.Collections;
 using UnityEngine;
 
 namespace TMG.PhysicsAddForces
+
+
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial class AddForceSystem : SystemBase
     {
         protected override void OnUpdate()
         {
+
+
+            var allTranslations = GetComponentDataFromEntity<Translation>(true);
+
             var deltaTime = Time.DeltaTime;
-            Entities.ForEach((Entity projectile, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass, ref Translation translation, ref Rotation rotation,
+            Entities.ForEach((Entity projectile, ref PhysicsVelocity physicsVelocity, ref PhysicsMass physicsMass, ref Translation translation, ref Rotation rotation, in LocalToWorld localToWorld,
                 in MoveForceData moveForceData) =>
             {
 
-                    var forceVector = (float3)Vector3.forward * moveForceData.ForceAmount * deltaTime;
-            physicsVelocity.ApplyLinearImpulse(physicsMass, forceVector);
-            //var direction = rotation;
+                //if (Input.GetKey(moveForceData.ForwardInputKey))
+                //{
 
-               // physicsVelocity.ApplyImpulse(physicsMass, translation, rotation, forceVector, 0.0f);
+                  var direction = math.forward(rotation.Value);
+                    //quaternion
+                    var forceVector = direction * moveForceData.ForceAmount * deltaTime;
+                    // rotation.Value = quaternion.LookRotation(translation.Value - tar);
+                    // translation.Value = 
+                    physicsVelocity.ApplyLinearImpulse(physicsMass, forceVector);
+
+                   
+             
+               // }
 
             }).Run();
         }
-    }
-}
+            }
+        }
+    

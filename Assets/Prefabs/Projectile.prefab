@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4196594046733982679}
   - component: {fileID: 7021133171404519781}
   - component: {fileID: 169084449553027538}
-  - component: {fileID: 1805131042110335785}
+  - component: {fileID: 3023522899301579663}
   m_Layer: 7
   m_Name: Projectile
   m_TagString: Projectile
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4196594046733982676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &1805131042110335785
+--- !u!114 &3023522899301579663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,5 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158a6d01456681547a183b655027d35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForceAmount: 100
-  ForwardInputKey: 0
+  ForceAmount: 500
+  ForwardInputKey: 101
+  ForwardDirection: {x: 0, y: 0, z: 0}

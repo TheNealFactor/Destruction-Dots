@@ -1,78 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
+using Unity.Physics.Extensions;
 using Unity.Transforms;
+using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 
 public class DotProjectile : MonoBehaviour
 {
-    public GameObject projectilePrefab;
+    public GameObject projectile;
+    public float initialVelocity;
     public KeyCode FireKey;
-    public KeyCode DestroyKey;
     public Transform GunBarrel;
 
-    private Entity projectileEntity;
     private EntityManager entityManager;
     private BlobAssetStore blobAssetStore;
     private GameObjectConversionSettings settings;
-    private List<Entity> projectiles;
-    
+
+    Entity projectileEntityPrefab;
 
     void Start()
     {
-        // using DOTS, a bit of boilerplate to instantiate the entities from a gameobject prefab is required
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         blobAssetStore = new BlobAssetStore();
         settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAssetStore);
-        // now this line converts the cubePrefab to an Entity inside this script
-        projectileEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(projectilePrefab, settings);
-
-        projectiles = new List<Entity>();
+        projectileEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(projectile, settings);
     }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(FireKey))
         {
+            // Remove other projectiles from the scene
+            //foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Projectile"))
+            //{
+            //    GameObject.Destroy(obj);
+            //}
             Vector3 rotation = GunBarrel.rotation.eulerAngles;
-            //Remove other projectiles from the scene
+            rotation.x = 0f;
 
-            Entity projectile = entityManager.Instantiate(projectileEntity);
 
-            Translation projectileTranslation = new Translation
-            {
-                Value = new Unity.Mathematics.float3(this.transform.position)
-            };
-            entityManager.SetComponentData(projectile, projectileTranslation);
-            entityManager.SetComponentData(projectile, new Rotation { Value = Quaternion.Euler(rotation) });
+            Entity bullet = entityManager.Instantiate(projectileEntityPrefab);
+            entityManager.SetComponentData(bullet, new Translation { Value = GunBarrel.position });
+            entityManager.SetComponentData(bullet, new Rotation { Value = Quaternion.Euler(rotation) });
+            entityManager.SetComponentData(bullet, new LocalToWorld());
 
-            projectiles.Add(projectile);
-
-            //Old
-            //var projectileInstance = GameObject.Instantiate(projectile, this.transform.position, Quaternion.identity);
-            //projectileInstance.GetComponent<Rigidbody>().velocity = initialVelocity * this.transform.forward;
         }
-
-        if (Input.GetKeyDown(DestroyKey))
-        {
-            foreach (Entity ent in projectiles)
-            {
-                entityManager.DestroyEntity(ent);
-
-            }
-            projectiles.Clear();
-        }
-    }
-
-    private void OnDisable()
-    {
-        blobAssetStore.Dispose();
-    }
-
-    private void OnDestroy()
-    {
-        //blobAssetStore.Dispose();
     }
 }
+
