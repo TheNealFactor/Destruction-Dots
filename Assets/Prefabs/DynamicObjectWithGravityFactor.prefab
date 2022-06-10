@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2858750071597654066}
   - component: {fileID: 6981163194080723311}
   - component: {fileID: 8698608698841967051}
-  - component: {fileID: 2641625462701345954}
+  - component: {fileID: -3531619852666829314}
   m_Layer: 0
   m_Name: DynamicObjectWithGravityFactor
   m_TagString: Untagged
@@ -240,7 +240,7 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &2641625462701345954
+--- !u!114 &-3531619852666829314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionType: 0
-  m_Smoothing: 1
+  m_Smoothing: 0
   m_Mass: 1
   m_LinearDamping: 0.01
   m_AngularDamping: 0.05
@@ -265,7 +265,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 0.99
+  m_GravityFactor: 1
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0

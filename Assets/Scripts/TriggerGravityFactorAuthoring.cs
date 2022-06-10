@@ -77,6 +77,7 @@ public partial class TriggerGravityFactorSystem : SystemBase
 
             bool isBodyADynamic = PhysicsVelocityGroup.HasComponent(entityA);
             bool isBodyBDynamic = PhysicsVelocityGroup.HasComponent(entityB);
+            Debug.Log("Test");
 
             // Ignoring overlapping static bodies
             if ((isBodyATrigger && !isBodyBDynamic) ||
