@@ -4,14 +4,52 @@ using Unity.Transforms;
 using Unity.Rendering;
 using Unity.Mathematics;
 
-public class FractureSystem : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] private Mesh unitMesh;
     [SerializeField] private Material unitMaterial;
+    [SerializeField] private GameObject gameObjectPrefab;
+
+    [SerializeField] int xSize = 10;
+    [SerializeField] int ySize = 10;
+    [Range(0.1f, 2f)]
+    [SerializeField] float spacing = 1f;
+
+    private Entity entityPrefab;
+    private World defaultWorld;
+    private EntityManager entityManager;
 
     private void Start()
     {
-        MakeEntity();
+        defaultWorld = World.DefaultGameObjectInjectionWorld;
+        entityManager = defaultWorld.EntityManager;
+
+        GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(defaultWorld, null);
+
+        entityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(gameObjectPrefab, settings);
+
+        // InstantiateEntity(new float3(4f, 0f, 4f));
+        InstantiateEntityGrid(xSize, ySize, spacing);
+    }
+
+    private void InstantiateEntity(float3 position)
+    {
+        Entity myEntity = entityManager.Instantiate(entityPrefab);
+        entityManager.SetComponentData(myEntity, new Translation
+        {
+            Value = position
+        });
+    }
+
+    private void InstantiateEntityGrid(int dimX, int dimY, float spacing)
+    {
+        for (int i = 0; i < dimX; i++)
+        {
+            for(int j = 0; j < dimY; j++)
+            {
+                InstantiateEntity(new float3(i * spacing, j * spacing, 0f));
+            }
+        }
     }
 
     private void MakeEntity()
@@ -29,9 +67,9 @@ public class FractureSystem : MonoBehaviour
         Entity myEntity = entityManager.CreateEntity(archetype);
 
         entityManager.AddComponentData(myEntity, new Translation
-            {
-                Value = new float3(0f, 0f, 0f)
-            });
+        {
+            Value = new float3(0f, 0f, 0f)
+        });
 
         RenderMeshUtility.AddComponents(myEntity, entityManager, new RenderMeshDescription(unitMesh, unitMaterial));
         entityManager.AddSharedComponentData(myEntity, new RenderMesh
@@ -49,7 +87,7 @@ public class FractureSystem : MonoBehaviour
         var mesh = this.GetComponent<MeshFilter>().mesh;
         Debug.Log("Positions");
 
-        
+
 
         var positions = mesh.vertices;
         var normals = mesh.normals;
