@@ -25,7 +25,7 @@ public class FractureDOTS : MonoBehaviour
 
     public void Start()
     {
-        this.ComputeFracture();
+       // this.ComputeFracture();
     }
 
     [ContextMenu("Print Mesh Info")]
