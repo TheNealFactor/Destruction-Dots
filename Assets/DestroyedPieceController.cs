@@ -20,6 +20,12 @@ public class DestroyedPieceController : MonoBehaviour
 
     private bool _configured = false;
     private bool _connections_found = false;
+    Material _material;
+
+    //Shrink Scale of Objects
+    Vector3 temp;
+    private float changeSpeed = 2f;
+    bool trigger = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +34,20 @@ public class DestroyedPieceController : MonoBehaviour
         _starting_pos = transform.position;
         _starting_orientation = transform.rotation;
         _starting_scale = transform.localScale;
+        _material = GetComponent<Renderer>().material;
 
         transform.localScale *= 1.02f;
 
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+
+        if (trigger)
+        {
+            StartCoroutine(ScaleObjectSize());
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,8 +69,13 @@ public class DestroyedPieceController : MonoBehaviour
         if(collision.gameObject.CompareTag("Projectile"))
         {
             //collision.collider.GetComponent<DestroyedPieceController>().cause_damage(transform.forward);
-            Debug.Log("Projectile hit Statue");
+           // Debug.Log("Projectile hit Statue");
             cause_damage(transform.forward);
+        }
+
+        if(collision.gameObject.CompareTag("Floor") && is_dirty)
+        {
+            trigger = true;
         }
     }
 
@@ -75,6 +96,7 @@ public class DestroyedPieceController : MonoBehaviour
         _rigidbody.isKinematic = false;
         is_dirty = true;
         _rigidbody.AddForce(force, ForceMode.Impulse);
+        _material.color = Color.red;
         //VFXController.Instance.spawn_dust_cloud(transform.position);
     }
 
@@ -82,5 +104,25 @@ public class DestroyedPieceController : MonoBehaviour
     {
         is_connected = false;
         _rigidbody.isKinematic = false;
+    }
+
+   public IEnumerator ScaleObjectSize()
+    {
+        Debug.Log("ScaleObject");
+        Destroy(_rigidbody);
+
+        yield return new WaitForSeconds(5);
+        if (temp.x >= 0)
+        {
+            temp = transform.localScale;
+            temp.x -= 1f * changeSpeed * Time.deltaTime;
+            temp.y -= 1f * changeSpeed * Time.deltaTime;
+            temp.z -= 1f * changeSpeed * Time.deltaTime;
+            transform.localScale = temp;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
