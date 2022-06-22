@@ -25,7 +25,7 @@ public class DestroyedPieceController : MonoBehaviour
     //Shrink Scale of Objects
     Vector3 temp;
     private float changeSpeed = 2f;
-    bool trigger = false;
+    public bool shrinkTrigger = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,14 +41,7 @@ public class DestroyedPieceController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
 
-        if (trigger)
-        {
-            StartCoroutine(ScaleObjectSize());
-        }
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -66,16 +59,16 @@ public class DestroyedPieceController : MonoBehaviour
         {
             //VFXController.Instance.spawn_dust_cloud(transform.position);
         }
-        if(collision.gameObject.CompareTag("Projectile"))
+        if (collision.gameObject.CompareTag("Projectile"))
         {
             //collision.collider.GetComponent<DestroyedPieceController>().cause_damage(transform.forward);
-           // Debug.Log("Projectile hit Statue");
+            // Debug.Log("Projectile hit Statue");
             cause_damage(transform.forward);
         }
 
-        if(collision.gameObject.CompareTag("Floor") && is_dirty)
+        if (collision.gameObject.CompareTag("Floor") && is_dirty)
         {
-            trigger = true;
+            shrinkTrigger = true;
         }
     }
 
@@ -106,10 +99,9 @@ public class DestroyedPieceController : MonoBehaviour
         _rigidbody.isKinematic = false;
     }
 
-   public IEnumerator ScaleObjectSize()
+    public IEnumerator ScaleObjectSize()
     {
-        Debug.Log("ScaleObject");
-        Destroy(_rigidbody);
+        //Debug.Log("ScaleObject");
 
         yield return new WaitForSeconds(5);
         if (temp.x >= 0)

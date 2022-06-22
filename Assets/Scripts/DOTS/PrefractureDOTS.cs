@@ -112,18 +112,18 @@ public class PrefractureDOTS : MonoBehaviour
         fragmentCollider.sharedMaterial = thisCollider.sharedMaterial;
         fragmentCollider.isTrigger = thisCollider.isTrigger;
 
-        // Copy rigid body properties to fragment
+       // Copy rigid body properties to fragment
         var rigidBody = obj.AddComponent<Rigidbody>();
-        // When pre-fracturing, freeze the rigid body so the fragments don't all crash to the ground when the scene starts.
+       // When pre-fracturing, freeze the rigid body so the fragments don't all crash to the ground when the scene starts.
         rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         rigidBody.drag = this.GetComponent<Rigidbody>().drag;
         rigidBody.angularDrag = this.GetComponent<Rigidbody>().angularDrag;
         rigidBody.useGravity = this.GetComponent<Rigidbody>().useGravity;
 
-        var unfreeze = obj.AddComponent<UnfreezeFragmentDOTS>();
-        unfreeze.unfreezeAll = prefractureOptions.unfreezeAll;
-        unfreeze.triggerOptions = this.triggerOptions;
-        unfreeze.onFractureCompleted = callbackOptions.onCompleted;
+        //var unfreeze = obj.AddComponent<UnfreezeFragmentDOTS>();
+        //unfreeze.unfreezeAll = prefractureOptions.unfreezeAll;
+        //unfreeze.triggerOptions = this.triggerOptions;
+        //unfreeze.onFractureCompleted = callbackOptions.onCompleted;
 
         return obj;
     }

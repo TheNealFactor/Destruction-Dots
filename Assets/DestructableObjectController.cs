@@ -15,7 +15,7 @@ public class DestructableObjectController : MonoBehaviour
         {
             var child = transform.GetChild(i);
             var _dpc = child.gameObject.AddComponent<DestroyedPieceController>();
-            var _rigidbody = child.gameObject.AddComponent<Rigidbody>();
+            var _rigidbody = child.gameObject.GetComponent<Rigidbody>();
             _rigidbody.isKinematic = false;
             _rigidbody.useGravity = false;
 
@@ -53,7 +53,15 @@ public class DestructableObjectController : MonoBehaviour
                 {
                     piece.drop();
                 }
+
+                if(piece && piece.shrinkTrigger)
+                {
+                    piece.StartCoroutine(piece.ScaleObjectSize());
+                    //Remove from list
+                }
             }
+
+            
         }
     }
 
