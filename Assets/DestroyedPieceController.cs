@@ -54,6 +54,17 @@ public class DestroyedPieceController : MonoBehaviour
                 if (!connected_to.Contains(neighbour))
                     connected_to.Add(neighbour);
             }
+
+
+
+            if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Ceiling"))
+            {
+                var TestList = GetComponentInParent<DestructableObjectController>();
+                TestList.roots.Add(gameObject);
+
+            }
+
+
         }
         else if (collision.gameObject.CompareTag("Floor"))
         {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DestructableObjectController : MonoBehaviour
 {
-    public GameObject[] roots = new GameObject[4];
-    [HideInInspector] public DestroyedPieceController[] root_dest_pieces = new DestroyedPieceController[4];
+    public List<GameObject> roots;
+    public DestroyedPieceController[] root_dest_pieces = new DestroyedPieceController[4];
 
     private List<DestroyedPieceController> destroyed_pieces = new List<DestroyedPieceController>();
 
@@ -31,7 +31,17 @@ public class DestructableObjectController : MonoBehaviour
         StartCoroutine(run_physics_steps(10));
     }
 
-    private void Update()
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            roots.Add(this.gameObject);
+            Debug.Log("FLOOR");
+        }
+    }
+
+        private void Update()
     {
 
         if (DestroyedPieceController.is_dirty)
