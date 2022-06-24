@@ -14,6 +14,7 @@ public class DestroyedPieceController : MonoBehaviour
     public static bool is_dirty = false;
 
     private Rigidbody _rigidbody;
+    private DestructableObjectController root_list;
     private Vector3 _starting_pos;
     private Quaternion _starting_orientation;
     private Vector3 _starting_scale;
@@ -39,6 +40,8 @@ public class DestroyedPieceController : MonoBehaviour
         transform.localScale *= 1.02f;
 
         _rigidbody = GetComponent<Rigidbody>();
+
+        root_list = GetComponentInParent<DestructableObjectController>();
     }
 
 
@@ -55,16 +58,10 @@ public class DestroyedPieceController : MonoBehaviour
                     connected_to.Add(neighbour);
             }
 
-
-
             if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Ceiling"))
             {
-                var TestList = GetComponentInParent<DestructableObjectController>();
-                TestList.roots.Add(gameObject);
-
+                root_list.roots.Add(gameObject);
             }
-
-
         }
         else if (collision.gameObject.CompareTag("Floor"))
         {

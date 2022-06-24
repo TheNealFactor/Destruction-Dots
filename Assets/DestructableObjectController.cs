@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestructableObjectController : MonoBehaviour
 {
     public List<GameObject> roots;
-    public DestroyedPieceController[] root_dest_pieces = new DestroyedPieceController[4];
+    public List<DestroyedPieceController> root_dest_pieces;
 
     private List<DestroyedPieceController> destroyed_pieces = new List<DestroyedPieceController>();
 
@@ -23,25 +23,10 @@ public class DestructableObjectController : MonoBehaviour
             _mc.convex = true;
             destroyed_pieces.Add(_dpc);
         }
-
-        for (int _i = 0; _i < 4; _i++)
-        {
-            root_dest_pieces[_i] = roots[_i].GetComponent<DestroyedPieceController>();
-        }
         StartCoroutine(run_physics_steps(10));
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.gameObject.CompareTag("Floor"))
-        {
-            roots.Add(this.gameObject);
-            Debug.Log("FLOOR");
-        }
-    }
-
-        private void Update()
+    private void Update()
     {
 
         if (DestroyedPieceController.is_dirty)
@@ -53,7 +38,7 @@ public class DestructableObjectController : MonoBehaviour
             }
 
             // do a breadth first search to find all connected pieces
-            for (int _i = 0; _i < 4; _i++)
+            for (int _i = 0; _i < root_dest_pieces.Count; _i++)
                 find_all_connected_pieces(root_dest_pieces[_i]);
 
             // drop all pieces not reachable from root
@@ -64,14 +49,14 @@ public class DestructableObjectController : MonoBehaviour
                     piece.drop();
                 }
 
-                if(piece && piece.shrinkTrigger)
+                if (piece && piece.shrinkTrigger)
                 {
                     piece.StartCoroutine(piece.ScaleObjectSize());
                     //Remove from list
                 }
             }
 
-            
+
         }
     }
 
@@ -101,5 +86,17 @@ public class DestructableObjectController : MonoBehaviour
         {
             piece.make_static();
         }
+
+        root_list_get_destroyed_piece_component();
+    }
+
+
+    private void root_list_get_destroyed_piece_component()
+    {
+        for (int i = 0; i < roots.Count; i++)
+        {
+            root_dest_pieces.Add(roots[i].GetComponent< DestroyedPieceController>());
+        }
+
     }
 }
