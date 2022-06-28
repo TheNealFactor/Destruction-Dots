@@ -23,7 +23,13 @@ public class DestructableObjectController : MonoBehaviour
             _mc.convex = true;
             destroyed_pieces.Add(_dpc);
         }
-        StartCoroutine(run_physics_steps(10));
+
+
+        StartCoroutine(run_physics_steps(1));
+
+
+        for (int _i = 0; _i < root_dest_pieces.Count; _i++)
+            find_all_connected_pieces(root_dest_pieces[_i]);
     }
 
     private void Update()
