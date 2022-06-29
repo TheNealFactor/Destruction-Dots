@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,7 +11,6 @@ public class PrefractureDOTS : MonoBehaviour
 
     public FractureOptionsDOTS fractureOptions;
     public CallbackOptionsDOTS callbackOptions;
-    public PrefractureOptionsDOTS prefractureOptions;
 
     /// <summary>
     /// Collector object that stores the produced fragments
@@ -48,38 +48,51 @@ public class PrefractureDOTS : MonoBehaviour
         if (mesh != null)
         {
             // If the fragment root object has not yet been created, create it now
-            if (this.fragmentRoot == null)
+            if (this == null)
             {
                 // Create a game object to contain the fragments
-                this.fragmentRoot = new GameObject($"{this.name}Fragments");
-                this.fragmentRoot.transform.SetParent(this.transform.parent);
-                this.fragmentRoot.AddComponent<DestructableObjectController>();
+                //Add nessacy components
+                this.gameObject.AddComponent<DestructableObjectController>();
+
+          
+
+   
+            
+                
+                //Add back mesh
+
+                this.fragmentRoot.GetComponent<MeshFilter>().sharedMesh = mesh;
+      
                 // Each fragment will handle its own scale
                 this.fragmentRoot.transform.position = this.transform.position;
                 this.fragmentRoot.transform.rotation = this.transform.rotation;
                 this.fragmentRoot.transform.localScale = Vector3.one;
             }
 
+   
             var fragmentTemplate = CreateFragmentTemplate();
 
             FragmenterDOTS.Fracture(this.gameObject,
                                 this.fractureOptions,
                                 fragmentTemplate,
-                                this.fragmentRoot.transform,
-                                prefractureOptions.saveFragmentsToDisk,
-                                prefractureOptions.saveLocation);
+                                this.transform);
 
             // Done with template, destroy it. Since we're in editor, use DestroyImmediate
             GameObject.DestroyImmediate(fragmentTemplate);
 
             // Deactivate the original object
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
 
             // Fire the completion callback
             if (callbackOptions.onCompleted != null)
             {
                 callbackOptions.onCompleted.Invoke();
             }
+        }
+
+        else
+        {
+            throw new Exception("Object has no mesh to Prefracture, please add a mesh.");
         }
     }
 
@@ -115,7 +128,6 @@ public class PrefractureDOTS : MonoBehaviour
        // Copy rigid body properties to fragment
         var rigidBody = obj.AddComponent<Rigidbody>();
        // When pre-fracturing, freeze the rigid body so the fragments don't all crash to the ground when the scene starts.
-        rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         rigidBody.drag = this.GetComponent<Rigidbody>().drag;
         rigidBody.angularDrag = this.GetComponent<Rigidbody>().angularDrag;
         rigidBody.useGravity = this.GetComponent<Rigidbody>().useGravity;
