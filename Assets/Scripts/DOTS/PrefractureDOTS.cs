@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class PrefractureDOTS : MonoBehaviour
 {
-    public TriggerOptionsDOTS triggerOptions;
+
     public FractureOptionsDOTS fractureOptions;
     public CallbackOptionsDOTS callbackOptions;
     public PrefractureOptionsDOTS prefractureOptions;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestroyedPieceController : MonoBehaviour
 {
 
-    public TriggerOptionsDOTS triggerOptions;
+
 
     public bool is_connected = true;
     [HideInInspector] public bool visited = false;
@@ -67,14 +67,18 @@ public class DestroyedPieceController : MonoBehaviour
         {
             //VFXController.Instance.spawn_dust_cloud(transform.position);
         }
-        if (collision.gameObject.CompareTag("Projectile"))
+        var contact = collision.contacts[0];
+        bool tagAllowed = root_list.triggerOptions.IsTagAllowed(contact.otherCollider.gameObject.tag);
+
+        if (
+                   (!root_list.triggerOptions.filterCollisionsByTag || tagAllowed))
         {
             //collision.collider.GetComponent<DestroyedPieceController>().cause_damage(transform.forward);
-            // Debug.Log("Projectile hit Statue");
+            Debug.Log("Projectile hit Statue");
             cause_damage(transform.forward);
         }
 
-        if (collision.gameObject.CompareTag("Floor") && is_dirty)
+        if (collision.gameObject.CompareTag("Floor") && is_dirty == true)
         {
             shrinkTrigger = true;
         }
@@ -109,7 +113,7 @@ public class DestroyedPieceController : MonoBehaviour
 
     public IEnumerator ScaleObjectSize()
     {
-        //Debug.Log("ScaleObject");
+       //Debug.Log("ScaleObject");
 
         yield return new WaitForSeconds(5);
         if (temp.x >= 0)

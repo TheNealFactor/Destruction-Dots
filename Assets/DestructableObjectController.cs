@@ -8,6 +8,9 @@ public class DestructableObjectController : MonoBehaviour
     public List<DestroyedPieceController> root_dest_pieces;
 
     private List<DestroyedPieceController> destroyed_pieces = new List<DestroyedPieceController>();
+    public TriggerOptionsDOTS triggerOptions;
+
+    public float collisionForce;
 
     private void Awake()
     {
@@ -55,7 +58,7 @@ public class DestructableObjectController : MonoBehaviour
                     piece.drop();
                 }
 
-                if (piece && piece.shrinkTrigger && piece.gameObject.activeInHierarchy)
+                if (piece && piece.shrinkTrigger && piece.gameObject.activeInHierarchy && DestroyedPieceController.is_dirty)
                 {
 
                     piece.StartCoroutine(piece.ScaleObjectSize());
