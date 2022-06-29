@@ -55,9 +55,11 @@ public class DestructableObjectController : MonoBehaviour
                     piece.drop();
                 }
 
-                if (piece && piece.shrinkTrigger)
+                if (piece && piece.shrinkTrigger && piece.gameObject.activeInHierarchy)
                 {
+
                     piece.StartCoroutine(piece.ScaleObjectSize());
+                    //destroyed_pieces.Remove(piece);
                     //Remove from list
                 }
             }
