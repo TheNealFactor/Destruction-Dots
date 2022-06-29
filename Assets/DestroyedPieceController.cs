@@ -63,29 +63,24 @@ public class DestroyedPieceController : MonoBehaviour
                 root_list.roots.Add(gameObject);
             }
         }
-        else if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor"))
         {
             //VFXController.Instance.spawn_dust_cloud(transform.position);
         }
         var contact = collision.contacts[0];
         bool tagAllowed = root_list.triggerOptions.IsTagAllowed(contact.otherCollider.gameObject.tag);
 
-        if (
-                   (!root_list.triggerOptions.filterCollisionsByTag || tagAllowed))
+        if ((tagAllowed))
         {
             //collision.collider.GetComponent<DestroyedPieceController>().cause_damage(transform.forward);
-            Debug.Log("Projectile hit Statue");
+            Debug.Log(" New Projectile hit Statue");
             cause_damage(transform.forward);
-        }
-
-        if (collision.gameObject.CompareTag("Floor") && is_dirty == true)
-        {
-            shrinkTrigger = true;
         }
     }
 
     public void make_static()
     {
+   
         _configured = true;
         _rigidbody.isKinematic = true;
         _rigidbody.useGravity = true;
@@ -97,11 +92,14 @@ public class DestroyedPieceController : MonoBehaviour
 
     public void cause_damage(Vector3 force)
     {
+        Debug.Log("Damaged caused");
         is_connected = false;
         _rigidbody.isKinematic = false;
         is_dirty = true;
         _rigidbody.AddForce(force, ForceMode.Impulse);
         _material.color = Color.red;
+        shrinkTrigger = true;
+
         //VFXController.Instance.spawn_dust_cloud(transform.position);
     }
 
@@ -113,7 +111,7 @@ public class DestroyedPieceController : MonoBehaviour
 
     public IEnumerator ScaleObjectSize()
     {
-       //Debug.Log("ScaleObject");
+      // Debug.Log("ScaleObject");
 
         yield return new WaitForSeconds(5);
         if (temp.x >= 0)

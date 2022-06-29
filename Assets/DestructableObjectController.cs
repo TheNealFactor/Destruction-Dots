@@ -60,7 +60,7 @@ public class DestructableObjectController : MonoBehaviour
 
                 if (piece && piece.shrinkTrigger && piece.gameObject.activeInHierarchy && DestroyedPieceController.is_dirty)
                 {
-
+                    Debug.Log("Shrinking object");
                     piece.StartCoroutine(piece.ScaleObjectSize());
                     //destroyed_pieces.Remove(piece);
                     //Remove from list
