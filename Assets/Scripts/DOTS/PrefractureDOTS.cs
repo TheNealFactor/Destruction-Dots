@@ -17,7 +17,9 @@ public class PrefractureDOTS : MonoBehaviour
     /// </summary>
     private GameObject fragmentRoot;
     private GameObject originalGameObject;
-    public List<GameObject> chunks = new List<GameObject>();
+    private List<GameObject> chunks = new List<GameObject>();
+
+    public bool fractureAgain;
 
 
 
@@ -48,11 +50,8 @@ public class PrefractureDOTS : MonoBehaviour
         // This method should only be called from the editor during design time
         if (!Application.isEditor || Application.isPlaying) return;
 
-
-
         if (chunks.Count != 0)
         {
-            Debug.Log("Destroy");
             for(int i = chunks.Count - 1; i > -1; i--)
             {
                 DestroyImmediate(chunks[i]);
@@ -60,8 +59,6 @@ public class PrefractureDOTS : MonoBehaviour
             }
         }
     
-
-
             originalGameObject = this.gameObject;
             var mesh = this.GetComponent<MeshFilter>().sharedMesh;
             var meshRen = this.GetComponent<MeshRenderer>();
@@ -71,8 +68,11 @@ public class PrefractureDOTS : MonoBehaviour
 
             if (mesh != null)
             {
-                // Create a game object to contain the fragments
+            // Create a game object to contain the fragments
+            if (this.gameObject.GetComponent<DestructableObjectController>() == null)
+            {
                 this.gameObject.AddComponent<DestructableObjectController>();
+            }
                 meshRen.enabled = false;
                 m_Collider.enabled = false;
 
@@ -86,8 +86,6 @@ public class PrefractureDOTS : MonoBehaviour
                 // Done with template, destroy it. Since we're in editor, use DestroyImmediate
                 DestroyImmediate(fragmentTemplate);
 
-                // Deactivate the original object
-                //this.gameObject.SetActive(false);
 
                 // Fire the completion callback
                 if (callbackOptions.onCompleted != null)
@@ -154,11 +152,16 @@ public class PrefractureDOTS : MonoBehaviour
         rigidBody.angularDrag = this.GetComponent<Rigidbody>().angularDrag;
         rigidBody.useGravity = this.GetComponent<Rigidbody>().useGravity;
 
+        //Add Fracture component to all fragments
+        if(fractureAgain)
+        {
+            var fracture = obj.AddComponent<FractureDOTS>();
+        }
         //var unfreeze = obj.AddComponent<UnfreezeFragmentDOTS>();
         //unfreeze.unfreezeAll = prefractureOptions.unfreezeAll;
         //unfreeze.triggerOptions = this.triggerOptions;
         //unfreeze.onFractureCompleted = callbackOptions.onCompleted;
-      
+
         return obj;
     }
 }
