@@ -72,8 +72,6 @@ public class DestroyedPieceController : MonoBehaviour
 
         if ((tagAllowed))
         {
-            //collision.collider.GetComponent<DestroyedPieceController>().cause_damage(transform.forward);
-            Debug.Log(" New Projectile hit Statue");
             cause_damage(transform.forward);
         }
     }
@@ -92,7 +90,6 @@ public class DestroyedPieceController : MonoBehaviour
 
     public void cause_damage(Vector3 force)
     {
-        Debug.Log("Damaged caused");
         is_connected = false;
         _rigidbody.isKinematic = false;
         is_dirty = true;

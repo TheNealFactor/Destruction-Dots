@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class PrefractureDOTS : MonoBehaviour
 {
 
@@ -21,7 +21,16 @@ public class PrefractureDOTS : MonoBehaviour
 
     public bool fractureAgain;
 
-
+    private void Awake()
+    {
+        if (Application.isPlaying)
+        {
+            if(this.gameObject.GetComponent<Rigidbody>() != null)
+            {
+                Destroy(this.gameObject.GetComponent<Rigidbody>());
+            }
+        }
+    }
 
 
     void OnValidate()
