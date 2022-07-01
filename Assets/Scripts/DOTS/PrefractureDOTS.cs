@@ -18,6 +18,8 @@ public class PrefractureDOTS : MonoBehaviour
     private GameObject fragmentRoot;
     private GameObject originalGameObject;
     private List<GameObject> chunks = new List<GameObject>();
+    public DestructableObjectController destObjCon;
+ 
 
     public bool fractureAgain;
 
@@ -73,14 +75,13 @@ public class PrefractureDOTS : MonoBehaviour
             var meshRen = this.GetComponent<MeshRenderer>();
             Collider m_Collider;
             m_Collider = GetComponent<Collider>();
-            var destObjCon = this.GetComponent<DestructableObjectController>();
 
             if (mesh != null)
             {
             // Create a game object to contain the fragments
             if (this.gameObject.GetComponent<DestructableObjectController>() == null)
             {
-                this.gameObject.AddComponent<DestructableObjectController>();
+                destObjCon = gameObject.AddComponent<DestructableObjectController>();
             }
                 meshRen.enabled = false;
                 m_Collider.enabled = false;
@@ -164,7 +165,33 @@ public class PrefractureDOTS : MonoBehaviour
         //Add Fracture component to all fragments
         if(fractureAgain)
         {
-            var fracture = obj.AddComponent<FractureDOTS>();
+
+
+
+            if (destObjCon.triggerOptions.triggerAllowedTags.Count != 0)
+            {
+                //for(int i = 0; i < destObjCon.triggerOptions.triggerAllowedTags.Count; i++)
+                //{
+                obj.AddComponent<FractureDOTS>();
+               var fracture = obj.AddComponent<FractureDOTS>();
+                if (fracture != null)
+                {
+                    //Debug.Log("Fuck you");
+                }
+
+                var copy = new List<String>(destObjCon.triggerOptions.triggerAllowedTags);
+                    Debug.Log("Iterate through trigger options!");
+                if(obj.GetComponent<FractureDOTS>() == null)
+                {
+                    Debug.Log("Fuck you");
+                }
+                    obj.GetComponent<FractureDOTS>().triggerOptions.triggerAllowedTags.AddRange(copy);
+             
+                
+                //fracture.triggerOptions.triggerAllowedTags = this.GetComponent<DestructableObjectController>().triggerOptions.triggerAllowedTags;
+  
+                //}
+            }
         }
         //var unfreeze = obj.AddComponent<UnfreezeFragmentDOTS>();
         //unfreeze.unfreezeAll = prefractureOptions.unfreezeAll;
