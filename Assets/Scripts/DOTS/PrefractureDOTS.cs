@@ -97,6 +97,7 @@ public class PrefractureDOTS : MonoBehaviour
                 DestroyImmediate(fragmentTemplate);
 
 
+
                 // Fire the completion callback
                 if (callbackOptions.onCompleted != null)
                 {
@@ -167,37 +168,11 @@ public class PrefractureDOTS : MonoBehaviour
         {
 
 
-
-            if (destObjCon.triggerOptions.triggerAllowedTags.Count != 0)
-            {
-                //for(int i = 0; i < destObjCon.triggerOptions.triggerAllowedTags.Count; i++)
-                //{
                 obj.AddComponent<FractureDOTS>();
-               var fracture = obj.AddComponent<FractureDOTS>();
-                if (fracture != null)
-                {
-                    //Debug.Log("Fuck you");
-                }
-
-                var copy = new List<String>(destObjCon.triggerOptions.triggerAllowedTags);
-                    Debug.Log("Iterate through trigger options!");
-                if(obj.GetComponent<FractureDOTS>() == null)
-                {
-                    Debug.Log("Fuck you");
-                }
-                    obj.GetComponent<FractureDOTS>().triggerOptions.triggerAllowedTags.AddRange(copy);
-             
-                
-                //fracture.triggerOptions.triggerAllowedTags = this.GetComponent<DestructableObjectController>().triggerOptions.triggerAllowedTags;
-  
-                //}
+                var fracture = obj.AddComponent<FractureDOTS>();
             }
-        }
-        //var unfreeze = obj.AddComponent<UnfreezeFragmentDOTS>();
-        //unfreeze.unfreezeAll = prefractureOptions.unfreezeAll;
-        //unfreeze.triggerOptions = this.triggerOptions;
-        //unfreeze.onFractureCompleted = callbackOptions.onCompleted;
 
         return obj;
     }
+
 }

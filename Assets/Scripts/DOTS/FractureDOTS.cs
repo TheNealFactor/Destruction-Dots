@@ -25,9 +25,16 @@ public class FractureDOTS : MonoBehaviour
 
     public void Start()
     {
-       if(transform.parent != null)
-        {
+        var fractureParent = transform.parent.GetComponent<DestructableObjectController>();
 
+        if (fractureParent != null)
+        {
+            // this.triggerOptions.triggerAllowedTags = transform.parent.GetComponent<DestructableObjectController>().triggerOptions.triggerAllowedTags;
+            // obj.GetComponent<FractureDOTS>().triggerOptions.triggerAllowedTags.AddRange(copy);
+            for (int i = 0; i < fractureParent.triggerOptions.triggerAllowedTags.Count; i++)
+            {
+                this.triggerOptions.triggerAllowedTags.Add(fractureParent.triggerOptions.triggerAllowedTags[i]);
+            }
         }
     }
 
