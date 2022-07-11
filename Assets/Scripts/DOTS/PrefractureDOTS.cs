@@ -18,8 +18,8 @@ public class PrefractureDOTS : MonoBehaviour
     private GameObject fragmentRoot;
     private GameObject originalGameObject;
     private List<GameObject> chunks = new List<GameObject>();
-    public DestructableObjectController destObjCon;
- 
+    public FragmentJointController destObjCon;
+
 
     public bool fractureAgain;
 
@@ -27,7 +27,7 @@ public class PrefractureDOTS : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            if(this.gameObject.GetComponent<Rigidbody>() != null)
+            if (this.gameObject.GetComponent<Rigidbody>() != null)
             {
                 Destroy(this.gameObject.GetComponent<Rigidbody>());
             }
@@ -63,68 +63,68 @@ public class PrefractureDOTS : MonoBehaviour
 
         if (chunks.Count != 0)
         {
-            for(int i = chunks.Count - 1; i > -1; i--)
+            for (int i = chunks.Count - 1; i > -1; i--)
             {
                 DestroyImmediate(chunks[i]);
                 chunks.RemoveAt(i);
             }
         }
-    
-            originalGameObject = this.gameObject;
-            var mesh = this.GetComponent<MeshFilter>().sharedMesh;
-            var meshRen = this.GetComponent<MeshRenderer>();
-            Collider m_Collider;
-            m_Collider = GetComponent<Collider>();
 
-            if (mesh != null)
-            {
+        originalGameObject = this.gameObject;
+        var mesh = this.GetComponent<MeshFilter>().sharedMesh;
+        var meshRen = this.GetComponent<MeshRenderer>();
+        Collider m_Collider;
+        m_Collider = GetComponent<Collider>();
+
+        if (mesh != null)
+        {
             // Create a game object to contain the fragments
-            if (this.gameObject.GetComponent<DestructableObjectController>() == null)
+            if (this.gameObject.GetComponent<FragmentJointController>() == null)
             {
-                destObjCon = gameObject.AddComponent<DestructableObjectController>();
+                destObjCon = gameObject.AddComponent<FragmentJointController>();
             }
-                meshRen.enabled = false;
-                m_Collider.enabled = false;
+            meshRen.enabled = false;
+            m_Collider.enabled = false;
 
-                var fragmentTemplate = CreateFragmentTemplate();
+            var fragmentTemplate = CreateFragmentTemplate();
 
-                FragmenterDOTS.Fracture(this.gameObject,
-                                    this.fractureOptions,
-                                    fragmentTemplate,
-                                    this.transform);
+            FragmenterDOTS.Fracture(this.gameObject,
+                                this.fractureOptions,
+                                fragmentTemplate,
+                                this.transform);
 
-                // Done with template, destroy it. Since we're in editor, use DestroyImmediate
-                DestroyImmediate(fragmentTemplate);
+            // Done with template, destroy it. Since we're in editor, use DestroyImmediate
+            DestroyImmediate(fragmentTemplate);
 
 
 
-                // Fire the completion callback
-                if (callbackOptions.onCompleted != null)
-                {
-                    callbackOptions.onCompleted.Invoke();
-                }
-            }
-
-            if (mesh == null)
+            // Fire the completion callback
+            if (callbackOptions.onCompleted != null)
             {
-                throw new Exception("Object has no mesh to Prefracture, please add a mesh.");
+                callbackOptions.onCompleted.Invoke();
             }
-
-
-            for (int i = 0; i < this.gameObject.transform.childCount; i++)
-            {
-
-                GameObject child = originalGameObject.transform.GetChild(i).gameObject;
-                if (child.name.Contains("Fragment"))
-                {
-                    chunks.Add(child);
-                }
-                //Do something with child
-            }
-
-
         }
-    
+
+        if (mesh == null)
+        {
+            throw new Exception("Object has no mesh to Prefracture, please add a mesh.");
+        }
+
+
+        for (int i = 0; i < this.gameObject.transform.childCount; i++)
+        {
+
+            GameObject child = originalGameObject.transform.GetChild(i).gameObject;
+            if (child.name.Contains("Fragment"))
+            {
+                chunks.Add(child);
+            }
+            //Do something with child
+        }
+
+
+    }
+
 
 
     /// <summary>
@@ -138,7 +138,7 @@ public class PrefractureDOTS : MonoBehaviour
         GameObject obj = new GameObject();
         obj.name = "Fragment";
         obj.tag = this.tag;
-  
+
         // Update mesh to the new sliced mesh
         obj.AddComponent<MeshFilter>();
 
@@ -156,23 +156,15 @@ public class PrefractureDOTS : MonoBehaviour
         fragmentCollider.sharedMaterial = thisCollider.sharedMaterial;
         fragmentCollider.isTrigger = thisCollider.isTrigger;
 
-       // Copy rigid body properties to fragment
+        // Copy rigid body properties to fragment
         var rigidBody = obj.AddComponent<Rigidbody>();
-       // When pre-fracturing, freeze the rigid body so the fragments don't all crash to the ground when the scene starts.
+        // When pre-fracturing, freeze the rigid body so the fragments don't all crash to the ground when the scene starts.
         rigidBody.drag = this.GetComponent<Rigidbody>().drag;
         rigidBody.angularDrag = this.GetComponent<Rigidbody>().angularDrag;
         rigidBody.useGravity = this.GetComponent<Rigidbody>().useGravity;
 
         //Add Fracture component to all fragments
-        if(fractureAgain)
-        {
-
-
-                obj.AddComponent<FractureDOTS>();
-                var fracture = obj.AddComponent<FractureDOTS>();
-            }
 
         return obj;
     }
-
 }

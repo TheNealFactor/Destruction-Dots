@@ -14,7 +14,7 @@ public class DestroyedPieceController : MonoBehaviour
     public static bool is_dirty = false;
 
     private Rigidbody _rigidbody;
-    private DestructableObjectController root_list;
+    private FragmentJointController root_list;
     private Vector3 _starting_pos;
     private Quaternion _starting_orientation;
     private Vector3 _starting_scale;
@@ -41,7 +41,7 @@ public class DestroyedPieceController : MonoBehaviour
 
         _rigidbody = GetComponent<Rigidbody>();
 
-        root_list = GetComponentInParent<DestructableObjectController>();
+        root_list = GetComponentInParent<FragmentJointController>();
     }
 
 

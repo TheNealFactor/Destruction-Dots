@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 33159816599736512}
   - component: {fileID: 23365209742068260}
   - component: {fileID: 65144673257323534}
-  - component: {fileID: 208216154478134762}
   m_Layer: 0
   m_Name: Neo_Pillar_01_L_snaps001
   m_TagString: Untagged
@@ -56,6 +55,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -68,6 +69,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -80,6 +82,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &65144673257323534
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93,19 +96,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0625, y: 3, z: 1.0625}
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!208 &208216154478134762
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829836967119872}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.531, y: 1.5000001, z: 0.531}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1.5000001, z: 0}
-  m_TimeToStationary: 0.5

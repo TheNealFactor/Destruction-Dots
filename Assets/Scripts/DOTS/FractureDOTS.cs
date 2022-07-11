@@ -25,7 +25,7 @@ public class FractureDOTS : MonoBehaviour
 
     public void Start()
     {
-        var fractureParent = transform.parent.GetComponent<DestructableObjectController>();
+        var fractureParent = transform.parent.GetComponent<FragmentJointController>();
 
         if (fractureParent != null)
         {
