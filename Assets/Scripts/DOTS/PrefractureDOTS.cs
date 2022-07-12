@@ -61,6 +61,15 @@ public class PrefractureDOTS : MonoBehaviour
         // This method should only be called from the editor during design time
         if (!Application.isEditor || Application.isPlaying) return;
 
+        if(Application.isEditor)
+        {
+            // Debug.Log("Add Rigidbody");
+            if (this.gameObject.GetComponent<Rigidbody>() == null)
+            {
+                this.gameObject.AddComponent<Rigidbody>();
+            }
+        }
+
         if (chunks.Count != 0)
         {
             for (int i = chunks.Count - 1; i > -1; i--)
@@ -164,6 +173,11 @@ public class PrefractureDOTS : MonoBehaviour
         rigidBody.useGravity = this.GetComponent<Rigidbody>().useGravity;
 
         //Add Fracture component to all fragments
+        if(fractureAgain)
+        {
+            obj.AddComponent<FractureDOTS>();
+        }
+
 
         return obj;
     }
