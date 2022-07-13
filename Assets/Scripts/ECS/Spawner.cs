@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Transforms;
 using Unity.Rendering;
 using Unity.Mathematics;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
@@ -19,8 +20,12 @@ public class Spawner : MonoBehaviour
     private World defaultWorld;
     private EntityManager entityManager;
 
+    public Text cubeCounterText;
+    private int cubeCount;
+
     private void Start()
     {
+
         defaultWorld = World.DefaultGameObjectInjectionWorld;
         entityManager = defaultWorld.EntityManager;
 
@@ -45,11 +50,13 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < dimX; i++)
         {
-            for(int j = 0; j < dimY; j++)
+            for (int j = 0; j < dimY; j++)
             {
                 InstantiateEntity(new float3(i * spacing, j * spacing, 0f));
+                cubeCount++;
             }
         }
+        cubeCounterText.text = $"Cube count: {cubeCount}";
     }
 
     private void MakeEntity()
@@ -78,31 +85,8 @@ public class Spawner : MonoBehaviour
             material = unitMaterial
         });
 
-        //PrintMeshInfo();
-    }
 
-    [ContextMenu("Print Mesh Info")]
-    public void PrintMeshInfo()
-    {
-        var mesh = this.GetComponent<MeshFilter>().mesh;
-        Debug.Log("Positions");
-
-
-
-        var positions = mesh.vertices;
-        var normals = mesh.normals;
-        var uvs = mesh.uv;
-
-        for (int i = 0; i < positions.Length; i++)
-        {
-            Debug.Log($"Vertex {i}");
-            Debug.Log($"POS | X: {positions[i].x} Y: {positions[i].y} Z: {positions[i].z}");
-            Debug.Log($"NRM | X: {normals[i].x} Y: {normals[i].y} Z: {normals[i].z} LEN: {normals[i].magnitude}");
-            Debug.Log($"UV  | U: {uvs[i].x} V: {uvs[i].y}");
-            Debug.Log("");
-        }
     }
 }
 
 //https://docs.unity.cn/Packages/com.unity.entities@0.1/manual/shared_component_data.html
-//Plan how you're going to create the entities, will they be entities to begin with or will you convert them when they are fractured? 

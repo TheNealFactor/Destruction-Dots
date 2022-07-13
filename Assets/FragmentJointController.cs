@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class FragmentJointController : MonoBehaviour
 {
-    public List<GameObject> roots;
+   
+    [HideInInspector]
     public List<DestroyedPieceController> root_dest_pieces;
+    [HideInInspector]
+    public List<GameObject> roots;
 
     private List<DestroyedPieceController> destroyed_pieces = new List<DestroyedPieceController>();
     public TriggerOptionsDOTS triggerOptions;
